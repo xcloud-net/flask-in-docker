@@ -1,7 +1,6 @@
 version: "3"
 
 services:
-  #网关
   flask-test-api:
     image: flask-test-api:fri
     container_name: flask-test-api
@@ -9,6 +8,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     restart: unless-stopped
+    ports:
+      - 4001:4001
     environment:
       ASPNETCORE_ENVIRONMENT: Staging
     networks:
