@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  #网关
+  flask-test-api:
+    image: flask-test-api:fri
+    container_name: flask-test-api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Staging
+    networks:
+      - xx
+networks:
+  xx:
+    external:
+      name: xx
