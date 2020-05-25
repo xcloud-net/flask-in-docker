@@ -1,9 +1,8 @@
 # coding=utf-8
-
-import sys
-import random
 from flask import Flask, Blueprint, render_template, request, redirect, jsonify
 from flasgger import Swagger, swag_from
+from language import language_blue
+from product import product_blue
 
 swagger_config = {
     "headers": [
@@ -25,7 +24,7 @@ template = {
     "swagger": "2.0",
     "info": {
         "title": "商品微服务",
-        "description": "API for my data",
+        "description": "商品微服务---",
         "version": "0.0.1"
     }
 }
@@ -33,59 +32,8 @@ template = {
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_config, template=template)
 
-
-@app.route('/api/<string:language>/', methods=['GET'])
-def index(language):
-    """
-    This is the language awesomeness API
-    Call this api passing a language name and get back its features
-    ---
-    tags:
-      - Awesomeness Language API
-    parameters:
-      - name: language
-        in: path
-        type: string
-        required: true
-        description: 语言名称
-      - name: size
-        in: query
-        type: integer
-        description: size of awesomeness
-    responses:
-      500:
-        description: Error The language is not awesome!
-      200:
-        description: A language with its awesomeness
-        schema:
-          id: awesome
-          properties:
-            language:
-              type: string
-              description: The language name
-              default: Lua
-            features:
-              type: array
-              description: The awesomeness list
-              items:
-                type: string
-              default: ["perfect", "simple", "lovely"]
-    """
-
-    language = language.lower().strip()
-    features = [
-        "awesome", "great", "dynamic",
-        "simple", "powerful", "amazing",
-        "perfect", "beauty", "lovely"
-    ]
-    size = int(request.args.get('size', 1))
-    if language in ['php', 'vb', 'visualbasic', 'actionscript']:
-        return "An error occurred, invalid language for awesomeness", 500
-    return jsonify(
-        language=language,
-        features=random.sample(features, size)
-    )
-
+app.register_blueprint(language_blue)
+app.register_blueprint(product_blue)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=4001)

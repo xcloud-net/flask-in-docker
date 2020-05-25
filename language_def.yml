@@ -1,0 +1,17 @@
+获取语言
+---
+tags:
+  - 语言
+parameters:
+  - name: language
+    in: path
+    type: string
+    required: true
+    description: 语言名称
+  - name: size
+    in: query
+    type: integer
+    description: 分页大小
+responses:
+  405:
+    description: 需要登陆
