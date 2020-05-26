@@ -6,15 +6,9 @@ from flasgger import swag_from
 language_blue = Blueprint('language', __name__, url_prefix='/api/language')
 
 
-@swag_from('language_def.yml')
+@swag_from('./language_def.yml')
 @language_blue.route('/get/<string:language>/', methods=['GET'])
 def get_language(language):
-    """
-    This is the language awesomeness API
-    Call this api passing a language name and get back its features
-    ---
-    """
-
     language = language.lower().strip()
     features = [
         "awesome", "great", "dynamic",

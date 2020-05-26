@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, render_template
 import random
 
 product_blue = Blueprint('product', __name__, url_prefix='/api/product')
@@ -19,7 +19,7 @@ def product_index(query):
     )
 
 
-@product_blue.route('/delete/<int:uid>/', methods=['GET'])
+@product_blue.route('/delete/<int:uid>/', methods=['DELETE'])
 def delete_product(uid):
     """
     删除商品
@@ -31,3 +31,17 @@ def delete_product(uid):
     return jsonify(
         data=[1, 2]
     )
+
+
+@product_blue.route('/detail/<int:uid>')
+def product_detail(uid):
+    """
+    商品详情
+    ---
+    tags:
+        - product
+    """
+    data = {
+        'title': 'xx'
+    }
+    return render_template('/product/detail.html', data=data)
