@@ -9,6 +9,7 @@ jsonschema==3.2.0
 MarkupSafe==1.1.1
 mistune==0.8.4
 pyrsistent==0.16.0
+python-json-logger==0.1.11
 PyYAML==5.3.1
 six==1.15.0
 Werkzeug==1.0.1

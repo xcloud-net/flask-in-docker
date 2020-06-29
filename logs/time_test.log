@@ -1,0 +1,2 @@
+{"timestamp": "2020-06-29T09:22:38.177367", "level": "INFO", "name": "product", "message": "search products", "arg": "6", "app": "flask-app"}
+{"timestamp": "2020-06-29T09:22:38.687366", "level": "INFO", "name": "product", "message": "search products", "arg": "6", "app": "flask-app"}
