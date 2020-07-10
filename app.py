@@ -1,40 +1,27 @@
 # coding=utf-8
-from flask import Flask, Blueprint, render_template, request, redirect, jsonify
-from flasgger import Swagger, swag_from
+from flask import Flask
+from flasgger import Swagger
 from language import language_blue
 from product import product_blue
-
-swagger_config = {
-    "headers": [
-    ],
-    "specs": [
-        {
-            "endpoint": 'xx',
-            "route": '/api/flask_test/swagger/swagger.json',
-            "rule_filter": lambda rule: True,  # all in
-            "model_filter": lambda tag: True,  # all in
-        }
-    ],
-    "static_url_path": "/flasgger_static",
-    # "static_folder": "static",  # must be set by user
-    "swagger_ui": True,
-    "specs_route": "/swagger/"
-}
-template = {
-    "swagger": "2.0",
-    "info": {
-        "title": "商品微服务",
-        "description": "商品微服务---",
-        "version": "0.0.1"
-    }
-}
+from account import account_blue
+from auth import get_jwk
+from middleware import test_middleware
+from swagger import swagger_config, template
 
 app = Flask(__name__,
             template_folder='./templates',
             static_folder='./static',
             static_url_path='/static')
+
+# get jwk public keys
+app.config['jwk_key'] = get_jwk()
+# enable middleware
+app.wsgi_app = test_middleware(app.wsgi_app)
+# enable swagger
 swagger = Swagger(app, config=swagger_config, template=template)
 
+# reg components
+app.register_blueprint(account_blue)
 app.register_blueprint(language_blue)
 app.register_blueprint(product_blue)
 
